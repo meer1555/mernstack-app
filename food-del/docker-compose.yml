@@ -1,0 +1,54 @@
+version: "3.8"
+networks:
+  app_network:
+    driver: bridge
+
+volumes:
+  admin_data:
+  frontend_data:
+  backend_data:
+
+services:
+  admin:
+    container_name: admin_container
+    build:
+      context: ./food-del/admin
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3000"
+    volumes:
+      - admin_data:/app
+    networks:
+      - app_network
+    stdin_open: true
+    tty: true
+
+  frontend:
+    container_name: frontend_container
+    build:
+      context: ./food-del/frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - frontend_data:/app
+    networks:
+      - app_network
+    stdin_open: true
+    tty: true
+
+  backend:
+    container_name: backend_container
+    build:
+      context: ./food-del/backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - backend_data:/app
+    env_file:
+      - ./food-del/backend/.env
+    networks:
+      - app_network
+    stdin_open: true
+    tty: true
