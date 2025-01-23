@@ -12,10 +12,10 @@ services:
   admin:
     container_name: admin_container
     build:
-      context: ./food-del/admin
+      context: ./admin
       dockerfile: Dockerfile
     ports:
-      - "3001:3000"
+      - "5174:5174"
     volumes:
       - admin_data:/app
     networks:
@@ -26,10 +26,10 @@ services:
   frontend:
     container_name: frontend_container
     build:
-      context: ./food-del/frontend
+      context: ./frontend
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "5173:5173"
     volumes:
       - frontend_data:/app
     networks:
@@ -40,14 +40,14 @@ services:
   backend:
     container_name: backend_container
     build:
-      context: ./food-del/backend
+      context: ./backend
       dockerfile: Dockerfile
     ports:
-      - "5000:5000"
+      - "4000:4000"
     volumes:
       - backend_data:/app
     env_file:
-      - ./food-del/backend/.env
+      - ./backend/environments.env
     networks:
       - app_network
     stdin_open: true
